@@ -1,0 +1,7 @@
+# flyctl launch added from .gitignore
+__pycache__
+handlers\__pycache__
+lib\__pycache__
+routes\__pycache__
+.env
+fly.toml
