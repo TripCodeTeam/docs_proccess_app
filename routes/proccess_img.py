@@ -20,7 +20,9 @@ proccess = APIRouter()
 
 
 @proccess.post("/doc/background")
-async def without_background(userId: str = Form(...), img: UploadFile = File(...)):
+async def without_background(
+    userId: str = Form(...), img: UploadFile = File(...), type: str = File(...)
+):
     try:
         # Leer la imagen
         image = Image.open(BytesIO(await img.read()))
@@ -29,7 +31,10 @@ async def without_background(userId: str = Form(...), img: UploadFile = File(...
 
         # Subir a Cloudinary
         folder_name = os.getenv("CLOUDINARY_FOLDER_NAME_DOCS")
-        file_name = f"{cloudinary.utils.random_public_id()}-{userId}"
+        if type == "back":
+            file_name = f"back-{userId}"
+        elif type == "front":
+            file_name = f"front-{userId}"
         result = cloudinary.uploader.upload(
             output_io,
             resource_type="image",
