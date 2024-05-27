@@ -3,3 +3,4 @@ pillow==8.2.0
 cloudinary==1.25.0
 uvicorn==0.15.0
 python-dotenv==1.0.1
+rembg==2.0.28
