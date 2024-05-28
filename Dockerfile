@@ -1,5 +1,5 @@
 # Usamos la última versión de Python
-FROM python:3.8
+FROM python:3.7
 
 # Copiamos los archivos de nuestra aplicación al contenedor
 COPY . /app
