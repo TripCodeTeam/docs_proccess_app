@@ -20,7 +20,7 @@ COPY . .
 ENV PATH="/app/venv/bin:$PATH"
 
 # Exponemos el puerto que Uvicorn usará
-EXPOSE 80
+EXPOSE 8000
 
 # Ejecutamos nuestra aplicación
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
