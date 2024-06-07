@@ -1,6 +1,5 @@
 from rembg import remove
 from PIL import Image
-from fastapi import APIRouter, Header, File, UploadFile
 from io import BytesIO
 
 
