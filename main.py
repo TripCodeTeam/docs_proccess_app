@@ -5,7 +5,11 @@ from routes.proccess_img import proccess
 
 app = FastAPI()
 
-origins = ["http://localhost:3000", "http://localhost:3001"]
+origins = [
+    "http://localhost:3000",
+    "http://localhost:3001",
+    "https://creditoya.vercel.app",
+]
 
 app.add_middleware(
     CORSMiddleware,
