@@ -9,8 +9,8 @@ origins = [
     "http://localhost:3000",
     "http://localhost:3001",
     "https://creditoya.vercel.app",
-    "https://creditoya-git-master-credito-yas-projects.vercel.app/",
-    "https://creditoya-lnyhrc0d5-credito-yas-projects.vercel.app/",
+    "https://creditoya-git-master-credito-yas-projects.vercel.app",
+    "https://creditoya-lnyhrc0d5-credito-yas-projects.vercel.app",
 ]
 
 app.add_middleware(

@@ -50,31 +50,3 @@ async def without_background(
         return JSONResponse(
             content={"success": False, "error": str(ex)}, status_code=500
         )
-
-
-@proccess.post("/payments/background")
-async def without_background(userId: str, img: UploadFile = File(...)):
-    try:
-        image = Image.open(BytesIO(await img.read()))
-
-        folder_name = os.getenv("CLOUDINARY_FOLDER_NAME_PAYMENT")
-        file_name = f"{cloudinary.utils.random_public_id()}-{userId}"
-
-        result = cloudinary.uploader.upload(
-            image,
-            resource_type="image",
-            format="png",
-            folder=folder_name,
-            public_id=file_name,
-        )
-        url = result.get("url")
-        return JSONResponse(content={"success": True, "data": url})
-    except Exception as ex:
-        return JSONResponse(
-            content={"success": False, "error": str(ex)}, status_code=500
-        )
-
-
-@proccess.post("/test")
-async def test_endpoint(userId: str = Form(...), img: UploadFile = File(...)):
-    return {"userId": userId, "filename": img.filename}
