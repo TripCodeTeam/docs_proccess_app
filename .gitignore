@@ -3,6 +3,7 @@
 /lib/__pycache__
 /routes/__pycache__
 /.env
+/project.toml
 # /Dockerfile
 # /docker-compose.yml
 /.dockerignore

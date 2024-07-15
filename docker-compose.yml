@@ -3,7 +3,5 @@ services:
     core_api:
         build: .
         container_name: "creditoya_process"
-        ports:
-            - "8000:12000"
         volumes:
             - ./app:/app
