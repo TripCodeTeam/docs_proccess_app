@@ -1,6 +1,5 @@
 fastapi==0.111.0
 pillow==10.3.0
-cloudinary==1.40.0
 uvicorn==0.30.0
 python-dotenv==1.0.1
 rembg==2.0.57

@@ -1,15 +1,13 @@
 from fastapi import HTTPException, UploadFile
+from fastapi.responses import StreamingResponse
 from PIL import Image
 from io import BytesIO
-
-# from handlers.compres import compressImage
-from handlers.uploadCloudinary import uploadToCloudinary
 from handlers.withoutBackground import remove_background
 
 MAX_FILE_SIZE_MB = 5  # Tamaño máximo de archivo en MB
 
 
-async def processImage(userId: str, img: UploadFile, type: str):
+async def processImage(img: UploadFile) -> BytesIO:
     try:
         # Leer el archivo de manera asíncrona
         image_data = await img.read()
@@ -20,11 +18,17 @@ async def processImage(userId: str, img: UploadFile, type: str):
         image = Image.open(BytesIO(image_data))
         imgNoBg = remove_background(image)
 
-        # Subir a Cloudinary
-        file_name = f"{type}-{userId}"
-        url = uploadToCloudinary(userId, imgNoBg, file_name)
+        # Guardar la imagen procesada en un buffer
+        buffered = BytesIO()
+        imgNoBg.save(buffered, format="PNG")
+        buffered.seek(0)
 
-        return url
+        # Limpiar recursos
+        image.close()
+        imgNoBg.close()
+
+        return buffered
 
     except Exception as ex:
         print(f"Error processing image: {str(ex)}")
+        raise HTTPException(status_code=500, detail="Internal Server Error")

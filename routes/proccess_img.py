@@ -1,5 +1,5 @@
-from fastapi import APIRouter, File, Form, UploadFile
-from fastapi.responses import JSONResponse
+from fastapi import APIRouter, File, UploadFile
+from fastapi.responses import JSONResponse, StreamingResponse
 from dotenv import load_dotenv
 from handlers.processImg import processImage
 
@@ -10,16 +10,18 @@ proccess = APIRouter()
 
 
 @proccess.post("/doc/background")
-async def without_background(
-    userId: str = Form(...),
-    img: UploadFile = File(...),
-    type: str = Form(...),
-):
+async def without_background(img: UploadFile = File(...)):
     try:
-        url = await processImage(userId, img, type)
+        image_buffer = await processImage(img)
 
-        if url:
-            return JSONResponse(content={"success": True, "data": url})
+        if image_buffer:
+            return StreamingResponse(
+                image_buffer,
+                media_type="image/png",
+                headers={
+                    "Content-Disposition": "attachment; filename=processed_image.png"
+                },
+            )
         else:
             return JSONResponse(
                 content={"success": False, "error": "Failed to process image"},
